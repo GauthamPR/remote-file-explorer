@@ -1,5 +1,5 @@
 # Remote File Explorer
-A file explorer which runs in a browser
+File Explorer that runs in browser
 
 ## Functions
 1. A host system shares a directory as root directory
