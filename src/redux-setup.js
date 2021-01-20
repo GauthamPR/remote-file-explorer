@@ -23,7 +23,7 @@ function pathReducer(state=defaultState, action){
                                 });
         case GO_BACK        :   return Object.assign({}, state, {
                                     tree: state.tree.slice(0, state.tree.length-1),
-                                    currentDirectory: state.tree[state.tree.length-1],
+                                    currentDirectory: state.tree.length>0?state.tree[state.tree.length-1]:state.currentDirectory,
                                     loading: true
                                 });
         case LOAD_CONTENT  :   return Object.assign({}, state, {content: action.content, loading: false})

@@ -39,6 +39,7 @@ class App extends React.Component{
                 {this.props.loading ?
                     <Loading />:
                     <Main 
+                        path={[...this.props.tree, this.props.currentDirectory].join('/')}
                         content={this.props.content}
                         openDirectory={this.props.openDirectory}
                     />

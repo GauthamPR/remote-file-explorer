@@ -31,11 +31,11 @@ app.get('/getDirectory/*', (req, res)=> {
         res.send({error: err.message.match(/:\s(.*),/)[1]});
     })
 })
-/*
+
 app.get('/getImages/*',async (req, res)=> {
     res.sendFile(await diskService.renderFilePath(req.url));
 })
-
+/*
 
 app.get('/Home*', (req, res)=> {
     let flag = 0;

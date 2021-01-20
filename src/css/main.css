@@ -7,3 +7,11 @@ h1{
     border-bottom: 1px solid white;
     padding-bottom: 10px;
 }
+img{
+    height: 300px;
+    width: 100%;
+    object-fit: contain;
+}
+.lazyload-wrapper{
+    position: relative;
+}

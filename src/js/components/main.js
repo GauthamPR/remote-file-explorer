@@ -11,7 +11,7 @@ class Main extends React.Component{
         return(
             <main style={{margin: 20}}>
                 <DirectoryContainer openDirectory={this.props.openDirectory} directories={this.props.content.directories}/>
-                <ImageContainer images={this.props.content.images} />
+                <ImageContainer path={this.props.path} images={this.props.content.images} />
             </main>
         )
     }
