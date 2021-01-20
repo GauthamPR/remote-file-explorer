@@ -15,15 +15,34 @@ class AddressBar extends React.Component{
             fontSize        : 18
         }
         return(
-            <div style={style}>{[...this.props.tree.split('/'), this.props.currentDirectory].filter(elem=>elem!="").join('<')}</div>
+            <div style={style}>{[...this.props.tree, this.props.currentDirectory].join('<')}</div>
         )
     }
 }
+
+const styleBackButton = {
+    display: "grid",
+    placeItems: "center",
+    backgroundColor: "rgb(50, 130, 149)",
+    width: 100,
+    border: "none"
+}
+
 class Navbar extends React.Component{
     constructor(props){
         super(props)
+        this.handleMouseEnter = this.handleMouseEnter.bind(this);
     }
     
+    handleMouseEnter(event){
+        event.target.style.backgroundColor  = "white";
+        event.target.style.cursor           = "pointer";
+    }
+
+    handleMouseOut(event){
+        event.target.style.backgroundColor = styleBackButton.backgroundColor;
+    }
+
     render(){
         const style = {
             backgroundColor : "#233a6e",
@@ -34,12 +53,15 @@ class Navbar extends React.Component{
         }
         return(
             <nav style={style}>
-                <div
+                <button
+                    type="button"
                     onClick={this.props.goBack}
-                    style={{display: "grid", placeItems: "center", backgroundColor: "rgb(50, 130, 149)", width: 100}}
+                    onMouseEnter={this.handleMouseEnter}
+                    onMouseOut={this.handleMouseOut}
+                    style={styleBackButton}
                 >
                     back
-                </div>
+                </button>
                 <AddressBar tree={this.props.tree} currentDirectory={this.props.currentDirectory}/>
                 <div style={{backgroundColor:"yellow", width: 50, height: "100%"}}></div>
             </nav>

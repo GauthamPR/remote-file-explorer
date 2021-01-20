@@ -1,6 +1,13 @@
 import React from 'react';
 import Navbar from './js/components/navbar.js';
 import Main from './js/components/main.js';
+import { render } from 'react-dom';
+
+function Loading(){
+    return (
+        <h1>Loading....</h1>
+    )
+}
 
 class App extends React.Component{
     constructor(props){
@@ -9,10 +16,10 @@ class App extends React.Component{
     }
 
     getDirectoryContents(){
-        fetch('/getDirectory' + this.props.tree + '/' + this.props.currentDirectory)
+        fetch('/getDirectory/' + [...this.props.tree, this.props.currentDirectory].join('/'))
         .then(response=>response.json())
         .then(data=>{
-            this.props.setContents(data)
+            this.props.setContent(data)
         })
     }
     componentDidMount(){
@@ -30,10 +37,13 @@ class App extends React.Component{
                     currentDirectory={this.props.currentDirectory}
                     goBack={this.props.goBack}
                 />
-                <Main 
-                    contents={this.props.contents}
-                    openDirectory={this.props.openDirectory}
-                />
+                {this.props.loading ?
+                    <Loading />:
+                    <Main 
+                        contents={this.props.contents}
+                        openDirectory={this.props.openDirectory}
+                    />
+                }   
             </div>
         );
     }
