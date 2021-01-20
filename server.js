@@ -2,7 +2,6 @@ const diskFunctions = require('./services/disk.js');
 const upload = require('./services/upload.js');
 
 const express = require('express');
-const imageThumbnail = require('image-thumbnail');
 const dotenv = require("dotenv").config();
 
 const app = express();
@@ -34,7 +33,7 @@ app.get('/getFiles/*',async (req, res)=> {
 })
 
 app.get('/getImages/*',async (req, res)=> {
-    res.send(await imageThumbnail(diskFunctions.renderFilePath(req.url), {percentage: 30}));
+    res.sendFile(await diskFunctions.renderFilePath(req.url));
 })
 
 

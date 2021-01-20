@@ -4,7 +4,7 @@ const dotenv = require('dotenv').config();
 
 const collisionFolderName = "$_Collisions";
 
-var rootDirectory = process.env.ROOTDIRECTORY;
+var rootDirectory = process.env.ROOT_DIRECTORY;
 var hiddenFiles = process.env.HIDDEN.split(' ').map(elem => elem = elem.split('(_)').join(' '));
 console.log(hiddenFiles);
 var collisionLocation = path.join(process.env.COLLISIONFOLDERLOCATION, collisionFolderName);
