@@ -1,4 +1,4 @@
-const diskFunctions = require('./services/disk.js');
+const diskService = require('./services/disk.js');
 const upload = require('./services/upload.js');
 
 const express = require('express');
@@ -18,22 +18,22 @@ upload(app);
 })*/
 
 app.get('/', (req, res)=> {
-    res.redirect('/Home')
+    res.sendFile(__dirname + '/build/views/index.html');
 })
 
-app.get('/getFiles/*',async (req, res)=> {
-    await diskFunctions
-        .readFiles(diskFunctions.renderFilePath(req.url))
-        .then(
-            result => res.send(result), 
-            error => {
-                res.send({error: error.message.match(/:\s(.*),/)[1]});
-            }
-        );
+app.get('/getDirectory/*', (req, res)=> {
+    diskService
+    .readFiles(diskService.renderFilePath(req.url))
+    .then(files=>{
+        res.send(files)
+    })
+    .catch(err=>{
+        res.send({error: err.message.match(/:\s(.*),/)[1]});
+    })
 })
-
+/*
 app.get('/getImages/*',async (req, res)=> {
-    res.sendFile(await diskFunctions.renderFilePath(req.url));
+    res.sendFile(await diskService.renderFilePath(req.url));
 })
 
 
@@ -55,7 +55,7 @@ app.get('/Home*', (req, res)=> {
     })
     flag == 0 ? res.sendFile(__dirname + '/build/views/index.html') : flag = 0;
 })
-
+*/
 app.use((req, res)=> {
     res.status(404)
         .type('txt')
