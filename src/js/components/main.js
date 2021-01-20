@@ -1,22 +1,5 @@
 import React from 'react';
-
-class DirectoryContainer extends React.Component{
-    constructor(props){
-        super(props);
-    }
-
-    render(){
-        let directories = []
-        if(this.props.directories)
-            directories = this.props.directories.map(directory=><div>{directory}</div>)
-        return(
-            <section>
-                <h1>Files</h1>
-                {directories}
-            </section>
-        )
-    }
-}
+import DirectoryContainer from './directory-container.js';
 
 class Main extends React.Component{
     constructor(props){
@@ -25,8 +8,8 @@ class Main extends React.Component{
 
     render(){
         return(
-            <main>
-                <DirectoryContainer directories={this.props.contents.directories}/>
+            <main style={{margin: 20}}>
+                <DirectoryContainer openDirectory={this.props.openDirectory} directories={this.props.contents.directories}/>
             </main>
         )
     }
