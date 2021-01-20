@@ -1,7 +1,6 @@
 import React from 'react';
 import Navbar from './js/components/navbar.js';
 import Main from './js/components/main.js';
-import { render } from 'react-dom';
 
 function Loading(){
     return (
@@ -40,7 +39,7 @@ class App extends React.Component{
                 {this.props.loading ?
                     <Loading />:
                     <Main 
-                        contents={this.props.contents}
+                        content={this.props.content}
                         openDirectory={this.props.openDirectory}
                     />
                 }   

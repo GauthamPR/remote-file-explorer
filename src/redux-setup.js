@@ -26,7 +26,7 @@ function pathReducer(state=defaultState, action){
                                     currentDirectory: state.tree[state.tree.length-1],
                                     loading: true
                                 });
-        case LOAD_CONTENT  :   return Object.assign({}, state, {content: action.contents, loading: false})
+        case LOAD_CONTENT  :   return Object.assign({}, state, {content: action.content, loading: false})
         default             :   return state
     }
 }
