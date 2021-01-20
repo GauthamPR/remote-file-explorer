@@ -2,9 +2,11 @@ import React from 'react';
 import {createStore} from 'redux';
 import {connect, Provider} from 'react-redux';
 import Presentational from './app.js'
+import { sources } from 'webpack';
+import { func } from 'prop-types';
 
-const OPEN_DIRECTORY    = "OPEN_DIRECTORY";
-const SET_CONTENTS      = "SET_CONTENTS";
+const SET_ADDRESS   = "SET_ADDRESS";
+const SET_CONTENTS  = "SET_CONTENTS";
 
 const defaultState = {
     currentDirectory: process.env.ROOT_DIRECTORY.split('\\').pop(),
@@ -14,7 +16,7 @@ const defaultState = {
 
 function pathReducer(state=defaultState, action){
     switch(action.type){
-        case OPEN_DIRECTORY : return Object.assign({}, state, {tree: state.tree + '/' + state.currentDirectory, currentDirectory: action.directory})
+        case SET_ADDRESS    : return Object.assign({}, state, {tree: action.tree, currentDirectory: action.directory})
                               break;
         case SET_CONTENTS   : return Object.assign({}, state, {contents: action.contents})
                               break;
@@ -22,10 +24,23 @@ function pathReducer(state=defaultState, action){
     }
 }
 
+const store = createStore(pathReducer,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+
 function openDirectory(directory){
     return {
-        type: OPEN_DIRECTORY,
+        type: SET_ADDRESS,
+        tree: store.getState().tree + '/' + store.getState().currentDirectory,
         directory
+    }
+}
+
+function goBack(){
+    let state               = store.getState();
+    let currentDirectory    = state.tree.splice(state.tree.length-2, 1);
+    return{
+        type            : SET_ADDRESS,
+        tree            : state.tree,
+        currentDirectory: currentDirectory
     }
 }
 
@@ -49,13 +64,15 @@ function mapDispatchToProps(dispatch){
         openDirectory: function(directory){
             dispatch(openDirectory(directory))
         },
+        goBack: function(){
+            dispatch(goBack())
+        },
         setContents: function(contents){
             dispatch(setContents(contents))
         }
     }
 }
 
-const store = createStore(pathReducer,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 const Container = connect(mapStateToProps, mapDispatchToProps)(Presentational);
 
 class AppWrapper extends React.Component{

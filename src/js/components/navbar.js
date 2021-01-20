@@ -34,7 +34,12 @@ class Navbar extends React.Component{
         }
         return(
             <nav style={style}>
-                <div style={{display: "grid", placeItems: "center", backgroundColor: "rgb(50, 130, 149)", width: 100}}>back</div>
+                <div
+                    onClick={this.props.goBack}
+                    style={{display: "grid", placeItems: "center", backgroundColor: "rgb(50, 130, 149)", width: 100}}
+                >
+                    back
+                </div>
                 <AddressBar tree={this.props.tree} currentDirectory={this.props.currentDirectory}/>
                 <div style={{backgroundColor:"yellow", width: 50, height: "100%"}}></div>
             </nav>

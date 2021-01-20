@@ -25,8 +25,15 @@ class App extends React.Component{
     render(){
         return(
             <div>
-                <Navbar tree={this.props.tree} currentDirectory={this.props.currentDirectory}/>
-                <Main openDirectory={this.props.openDirectory} contents={this.props.contents}/>
+                <Navbar 
+                    tree={this.props.tree}
+                    currentDirectory={this.props.currentDirectory}
+                    goBack={this.props.goBack}
+                />
+                <Main 
+                    contents={this.props.contents}
+                    openDirectory={this.props.openDirectory}
+                />
             </div>
         );
     }
