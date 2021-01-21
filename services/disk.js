@@ -13,10 +13,10 @@ module.exports ={
 
     //function to get all file names from a path (filePath)
     readFiles: function readFiles(filePath){
-        const regexMms = /(.jpg)|(.JPG)|(.jpeg)|(.png)$/;
+        const regexImages = /(.jpg)|(.JPG)|(.jpeg)|(.png)$/;
         var fileCategories = {
             directories: [],
-            mms: []
+            images: []
         };
         return new Promise((resolve, reject)=> {
             fs.readdir(filePath, (err, fileNames)=> {
@@ -30,8 +30,8 @@ module.exports ={
                     })
     
                     fileNames.forEach((fileName)=> {
-                        if(regexMms.test(fileName)){
-                            fileCategories.mms.push(fileName);
+                        if(regexImages.test(fileName)){
+                            fileCategories.images.push(fileName);
                         }
                         else{
                             fileCategories.directories.push(fileName);

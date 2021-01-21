@@ -1,32 +1,73 @@
 import React from 'react';
 
+const styleNav = {
+    backgroundColor : "#233a6e",
+    height          : 40,
+    display         : "flex",
+    justifyContent  : "space-between",
+    borderBottom    : "3px solid orange",
+    fontFamily      : "inherit"
+}
+const styleAddress = {
+    color           : "white",
+    width           : "100%",
+    height          : "100%",
+    display         : "flex",
+    alignItems      : "center",
+    justifyContent  : "center",
+    fontSize        : 18
+}
+const styleBackButton = {
+    display         : "grid",
+    placeItems      : "center",
+    backgroundColor : "rgb(50, 130, 149)",
+    border          : "none"
+}
+
 class AddressBar extends React.Component{
     constructor(props){
         super(props)
+        this.handleClick        = this.handleClick.bind(this);
+        this.handleMouseEnter   = this.handleMouseEnter.bind(this);
+        this.handleMouseOut     = this.handleMouseOut.bind(this);
     }
-
+    handleClick(address){
+        this.props.setAddress(address)
+    }
+    handleMouseEnter(event){
+        event.target.style.opacity      = "1";
+        event.target.style.borderBottom = "1px solid orange"
+    }
+    handleMouseOut(event){
+        event.target.style.opacity      = "0.6";
+        event.target.style.borderBottom = "none";
+    }
     render(){
-        const style = {
-            color           : "white",
-            width           : "100%",
-            height          : "100%",
-            display         : "grid",
-            placeItems      : "center",
-            fontSize        : 18
-        }
+        const historyElements = this.props.tree.map((elem, index, array)=>{
+            return (
+                <React.Fragment key={index}>
+                    <div 
+                        style={{
+                            cursor      : "pointer",
+                            opacity     : "0.6",
+                            whiteSpace  : "nowrap"
+                        }}
+                        onMouseEnter={this.handleMouseEnter}
+                        onMouseOut={this.handleMouseOut}
+                        onClick={this.handleClick.bind(this, array.slice(0, index+1).join('/'))}
+                    >
+                        {elem}
+                    </div>
+                    <div>></div>
+                </React.Fragment>
+            )
+        })
         return(
-            <div style={style}>{[...this.props.tree, this.props.currentDirectory].join('<')}</div>
+            <div style={styleAddress}>{historyElements}<span style={{whiteSpace: "nowrap"}}>{this.props.currentDirectory}</span></div>
         )
     }
 }
 
-const styleBackButton = {
-    display: "grid",
-    placeItems: "center",
-    backgroundColor: "rgb(50, 130, 149)",
-    width: 100,
-    border: "none"
-}
 
 class Navbar extends React.Component{
     constructor(props){
@@ -44,15 +85,8 @@ class Navbar extends React.Component{
     }
 
     render(){
-        const style = {
-            backgroundColor : "#233a6e",
-            height          : 40,
-            display         : "flex",
-            justifyContent  : "space-between",
-            borderBottom    : "3px solid orange"
-        }
         return(
-            <nav style={style}>
+            <nav style={styleNav}>
                 <button
                     type="button"
                     onClick={this.props.goBack}
@@ -60,9 +94,9 @@ class Navbar extends React.Component{
                     onMouseOut={this.handleMouseOut}
                     style={styleBackButton}
                 >
-                    back
+                    Go Back
                 </button>
-                <AddressBar tree={this.props.tree} currentDirectory={this.props.currentDirectory}/>
+                <AddressBar setAddress={this.props.setAddress} tree={this.props.tree} currentDirectory={this.props.currentDirectory}/>
                 <div style={{backgroundColor:"yellow", width: 50, height: "100%"}}></div>
             </nav>
         )
