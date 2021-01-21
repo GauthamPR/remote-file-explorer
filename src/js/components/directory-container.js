@@ -18,7 +18,7 @@ const styleTile = {
 const styleContainer = {
     display             :"grid",
     gridTemplateColumns :"repeat(auto-fill, minmax(250px, 1fr))",
-    rowGap              : 40,
+    rowGap              : 30,
     justifyItems        : "center"
 }
 

@@ -10,12 +10,14 @@ const styleNav = {
 }
 const styleAddress = {
     color           : "white",
-    width           : "100%",
+    width           : "auto",
     height          : "100%",
     display         : "flex",
     alignItems      : "center",
-    justifyContent  : "center",
-    fontSize        : 18
+    textAlign       : "center",
+    overflow        : "auto",
+    fontSize        : 18,
+    margin          : "0 10px"
 }
 const styleBackButton = {
     display         : "grid",
@@ -47,7 +49,7 @@ class AddressBar extends React.Component{
         const historyElements = this.props.tree.map((elem, index, array)=>{
             return (
                 <React.Fragment key={index}>
-                    <div 
+                    <span 
                         style={{
                             cursor      : "pointer",
                             opacity     : "0.6",
@@ -58,8 +60,8 @@ class AddressBar extends React.Component{
                         onClick={this.handleClick.bind(this, array.slice(0, index+1).join('/'))}
                     >
                         {elem}
-                    </div>
-                    <div>{arrow}</div>
+                    </span>
+                    <span>{arrow}</span>
                 </React.Fragment>
             )
         })

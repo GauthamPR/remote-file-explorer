@@ -24,7 +24,7 @@ module.exports ={
                     reject(err);
                 }
                 else {
-                    fileNames = fileNames.map(elem=> elem.split(' ').join('(_)'));//removing spaces for front-end smoothening
+                    //fileNames = fileNames.map(elem=> elem.split(' ').join('(_)'));//removing spaces for front-end smoothening
                     if(fileNames.length < 1)
                         resolve({empty: true})
                     else{

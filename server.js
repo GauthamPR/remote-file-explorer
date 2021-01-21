@@ -1,6 +1,7 @@
 const diskService = require('./services/disk.js');
 const upload = require('./services/upload.js');
 
+
 const express = require('express');
 const dotenv = require("dotenv").config();
 
@@ -23,7 +24,7 @@ app.get('/', (req, res)=> {
 
 app.get('/getDirectory/*', (req, res)=> {
     diskService
-    .readFiles(diskService.renderFilePath(req.url))
+    .readFiles(diskService.renderFilePath(decodeURIComponent(req.url)))
     .then(files=>{
         res.send(files)
     })
@@ -33,7 +34,7 @@ app.get('/getDirectory/*', (req, res)=> {
 })
 
 app.get('/getImages/*',async (req, res)=> {
-    res.sendFile(await diskService.renderFilePath(req.url));
+    res.sendFile(await diskService.renderFilePath(decodeURIComponent(req.url)));
 })
 /*
 

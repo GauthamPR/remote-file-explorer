@@ -22,22 +22,12 @@ const altStyleImg = {
 class Images extends React.Component{
     constructor(props){
         super(props);
-        this.state = {
-            loading: false
-        }
-        this.handleLoad = this.handleLoad.bind(this);
-    }
-
-    handleLoad(){
-        this.setState({
-            loading: false
-        })
     }
 
     render(){
         return(
-            <LazyLoad key={this.props.index} once>
-                <img style={styleImg} onLoad={this.handleLoad} src={this.props.imgUrl}></img>
+            <LazyLoad key={this.props.index}>
+                <img style={styleImg} src={this.props.imgUrl}></img>
             </LazyLoad>
         )
     }
