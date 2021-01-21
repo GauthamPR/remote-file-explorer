@@ -1,22 +1,5 @@
 import React from 'react';
 
-const styleAddress = {
-    color           : "white",
-    width           : "100%",
-    height          : "100%",
-    display         : "flex",
-    alignItems      : "center",
-    justifyContent  : "center",
-    fontSize        : 18,
-    letterSpacing   : "0.1em"
-}
-const styleBackButton = {
-    display         : "grid",
-    placeItems      : "center",
-    backgroundColor : "rgb(50, 130, 149)",
-    width           : 100,
-    border          : "none"
-}
 const styleNav = {
     backgroundColor : "#233a6e",
     height          : 40,
@@ -24,6 +7,21 @@ const styleNav = {
     justifyContent  : "space-between",
     borderBottom    : "3px solid orange",
     fontFamily      : "inherit"
+}
+const styleAddress = {
+    color           : "white",
+    width           : "100%",
+    height          : "100%",
+    display         : "flex",
+    alignItems      : "center",
+    justifyContent  : "center",
+    fontSize        : 18
+}
+const styleBackButton = {
+    display         : "grid",
+    placeItems      : "center",
+    backgroundColor : "rgb(50, 130, 149)",
+    border          : "none"
 }
 
 class AddressBar extends React.Component{
@@ -48,23 +46,24 @@ class AddressBar extends React.Component{
         const historyElements = this.props.tree.map((elem, index, array)=>{
             return (
                 <React.Fragment key={index}>
-                    <span 
+                    <div 
                         style={{
-                            cursor  : "pointer",
-                            opacity : "0.6"
+                            cursor      : "pointer",
+                            opacity     : "0.6",
+                            whiteSpace  : "nowrap"
                         }}
                         onMouseEnter={this.handleMouseEnter}
                         onMouseOut={this.handleMouseOut}
                         onClick={this.handleClick.bind(this, array.slice(0, index+1).join('/'))}
                     >
                         {elem}
-                    </span>
-                    <span>></span>
+                    </div>
+                    <div>></div>
                 </React.Fragment>
             )
         })
         return(
-            <div style={styleAddress}>{historyElements}{this.props.currentDirectory}</div>
+            <div style={styleAddress}>{historyElements}<span style={{whiteSpace: "nowrap"}}>{this.props.currentDirectory}</span></div>
         )
     }
 }
