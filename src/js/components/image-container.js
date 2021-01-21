@@ -3,15 +3,27 @@ import LazyLoad from 'react-lazyload';
 
 const styleContainer = {
     display             : "grid",
-    gridTemplateColumns : "repeat(auto-fill, minmax(250px, 1fr))" ,
-    gap           : "50px"
+    gridTemplateColumns : "repeat(auto-fit, minmax(250px, 1fr))",
+    gap                 : "10px"
 }
-
+const altStyleContainer = {
+    columnCount : "5",
+    lineHeight  : "0",
+    gap         : "5px"
+}
+const styleImg = {
+    height      : "300px",
+    width       : "100%",
+    objectFit   : "contain"
+}
+const altStyleImg = {
+    width: "100%"
+}
 class Images extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            loading: true
+            loading: false
         }
         this.handleLoad = this.handleLoad.bind(this);
     }
@@ -24,9 +36,8 @@ class Images extends React.Component{
 
     render(){
         return(
-            <LazyLoad key={this.props.index} once offset={500} >
-                {this.state.loading && <div style={{backgroundColor: "white", height: "100%", width:"100%", position: "absolute", display: "grid", placeItems: "center"}}>Loading</div>}
-                <img onLoad={this.handleLoad} src={this.props.imgUrl}></img>
+            <LazyLoad key={this.props.index} once>
+                <img style={styleImg} onLoad={this.handleLoad} src={this.props.imgUrl}></img>
             </LazyLoad>
         )
     }

@@ -4,11 +4,15 @@ const styleTile = {
     backgroundColor : "#C4C78D",
     textAlign       : "center",
     padding         : "17px 5px",
-    width           : 175,
+    minWidth           : 175,
     border          : "1px solid black",
     boxShadow       : "5px 5px 7px #1f1e1e",
     borderRadius    : 5,
-    cursor          : "pointer"
+    cursor          : "pointer",
+    overflowWrap    : "break-word",
+    letterSpacing   : "0.1em",
+    fontFamily      : "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif",
+    fontSize        : "16px"
 }
 
 const styleContainer = {
@@ -33,7 +37,7 @@ class DirectoryContainer extends React.Component{
     
     handleMouseOut(event){
         event.target.style.backgroundColor  = styleTile.backgroundColor;
-        event.target.style.boxShadow              = styleTile.boxShadow;
+        event.target.style.boxShadow        = styleTile.boxShadow;
     }
 
     handleClick(event){

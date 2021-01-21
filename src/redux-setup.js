@@ -5,46 +5,58 @@ import Presentational from './app.js'
 
 const OPEN_DIRECTORY    = "OPEN_DIRECTORY";
 const GO_BACK           = "GO_BACK";
-const LOAD_CONTENT     = "LOAD_CONTENT";
+const LOAD_CONTENT      = "LOAD_CONTENT";
+const SET_ADDRESS       = "SET_ADDRESS";
 
 const defaultState = {
     currentDirectory: process.env.ROOT_DIRECTORY.split('\\').pop(),
     tree            : [],
-    content        : {},
+    content         : {},
     loading         : true
 }
 
 function pathReducer(state=defaultState, action){
     switch(action.type){
         case OPEN_DIRECTORY :   return Object.assign({}, state, {
-                                    tree: [...state.tree, state.currentDirectory],
-                                    currentDirectory: action.directory,
-                                    loading: true
+                                    tree            : [...state.tree, state.currentDirectory],
+                                    currentDirectory: action.currentDirectory,
+                                    loading         : true
                                 });
+        case SET_ADDRESS :   return Object.assign({}, state, {
+                                    tree            : action.address.split('/').slice(0, action.address.split('/').length-1),
+                                    currentDirectory: action.address.split('/')[action.address.split('/').length-1]
+                                })
         case GO_BACK        :   return Object.assign({}, state, {
-                                    tree: state.tree.slice(0, state.tree.length-1),
+                                    tree            : state.tree.slice(0, state.tree.length-1),
                                     currentDirectory: state.tree.length>0?state.tree[state.tree.length-1]:state.currentDirectory,
-                                    loading: true
+                                    loading         : true
                                 });
-        case LOAD_CONTENT  :   return Object.assign({}, state, {content: action.content, loading: false})
+        case LOAD_CONTENT   :   return Object.assign({}, state, {content: action.content, loading: false})
         default             :   return state
     }
 }
 
 function openDirectory(directory){
     return {
-        type: OPEN_DIRECTORY,
-        directory
+        type            : OPEN_DIRECTORY,
+        currentDirectory: directory
+    }
+}
+
+function setAddress(address){
+    return {
+        type    : SET_ADDRESS,
+        address : address
     }
 }
 
 function goBack(){
     return{
-        type : GO_BACK
+        type: GO_BACK
     }
 }
 
-function setContent(content){
+function loadContent(content){
     return{
         type: LOAD_CONTENT,
         content
@@ -65,11 +77,14 @@ function mapDispatchToProps(dispatch){
         openDirectory: function(directory){
             dispatch(openDirectory(directory))
         },
+        setAddress: function(address){
+            dispatch(setAddress(address))
+        },
         goBack: function(){
             dispatch(goBack())
         },
-        setContent: function(content){
-            dispatch(setContent(content))
+        loadContent: function(content){
+            dispatch(loadContent(content))
         }
     }
 }

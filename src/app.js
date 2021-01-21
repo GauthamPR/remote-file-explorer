@@ -18,7 +18,7 @@ class App extends React.Component{
         fetch('/getDirectory/' + [...this.props.tree, this.props.currentDirectory].join('/'))
         .then(response=>response.json())
         .then(data=>{
-            this.props.setContent(data)
+            this.props.loadContent(data)
         })
     }
     componentDidMount(){
@@ -30,11 +30,12 @@ class App extends React.Component{
     }
     render(){
         return(
-            <div>
+            <div id="root" style={{fontFamily: "inherit"}}>
                 <Navbar 
                     tree={this.props.tree}
                     currentDirectory={this.props.currentDirectory}
                     goBack={this.props.goBack}
+                    setAddress={this.props.setAddress}
                 />
                 {this.props.loading ?
                     <Loading />:
