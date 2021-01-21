@@ -57,9 +57,13 @@ class ImageContainer extends React.Component{
         return(
             <section>
                 <h1>Images</h1>
-                <div style={styleContainer}>
-                    {images}
-                </div>
+                {this.props.images.length > 0?
+                    <div style={styleContainer}>
+                        {images}
+                    </div>
+                 :
+                 <div className="empty-placeholder">No images</div>
+                }
             </section>
         )
     }

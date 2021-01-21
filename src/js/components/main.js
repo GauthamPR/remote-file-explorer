@@ -10,8 +10,14 @@ class Main extends React.Component{
     render(){
         return(
             <main style={{margin: 20}}>
-                <DirectoryContainer openDirectory={this.props.openDirectory} directories={this.props.content.directories}/>
-                <ImageContainer path={this.props.path} images={this.props.content.images} />
+                {this.props.content.empty ?
+                    <div className="empty-placeholder">Empty Folder</div>
+                 :
+                 <React.Fragment>
+                    <DirectoryContainer openDirectory={this.props.openDirectory} directories={this.props.content.directories}/>
+                    <ImageContainer path={this.props.path} images={this.props.content.images} />
+                </React.Fragment>
+                }
             </main>
         )
     }

@@ -13,3 +13,10 @@ h1{
 .lazyload-wrapper{
     position: relative;
 }
+.empty-placeholder{
+    background-color: rgb(51, 51, 53);
+    min-height: 40vh;
+    color: white; 
+    display: grid;
+    place-items: center;
+}

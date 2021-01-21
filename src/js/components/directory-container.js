@@ -64,9 +64,13 @@ class DirectoryContainer extends React.Component{
         return(
             <section>
                 <h1>Files</h1>
-                <div style={styleContainer}>
-                    {directories}
-                </div>
+                {this.props.directories.length > 0?
+                    <div style={styleContainer}>
+                        {directories}
+                    </div>
+                 :
+                    <div className="empty-placeholder">No Files</div>
+                }
             </section>
         )
     }

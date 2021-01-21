@@ -43,6 +43,7 @@ class AddressBar extends React.Component{
         event.target.style.borderBottom = "none";
     }
     render(){
+        const arrow = ">"
         const historyElements = this.props.tree.map((elem, index, array)=>{
             return (
                 <React.Fragment key={index}>
@@ -58,7 +59,7 @@ class AddressBar extends React.Component{
                     >
                         {elem}
                     </div>
-                    <div>></div>
+                    <div>{arrow}</div>
                 </React.Fragment>
             )
         })

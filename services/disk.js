@@ -25,19 +25,23 @@ module.exports ={
                 }
                 else {
                     fileNames = fileNames.map(elem=> elem.split(' ').join('(_)'));//removing spaces for front-end smoothening
-                    hiddenFiles.forEach((elem)=> {
-                        fileNames=fileNames.filter((fileName)=> fileName!=elem);
-                    })
-    
-                    fileNames.forEach((fileName)=> {
-                        if(regexImages.test(fileName)){
-                            fileCategories.images.push(fileName);
-                        }
-                        else{
-                            fileCategories.directories.push(fileName);
-                        }
-                    })
-                    resolve(fileCategories);
+                    if(fileNames.length < 1)
+                        resolve({empty: true})
+                    else{
+                        hiddenFiles.forEach((elem)=> {
+                            fileNames=fileNames.filter((fileName)=> fileName!=elem);
+                        })
+        
+                        fileNames.forEach((fileName)=> {
+                            if(regexImages.test(fileName)){
+                                fileCategories.images.push(fileName);
+                            }
+                            else{
+                                fileCategories.directories.push(fileName);
+                            }
+                        })
+                        resolve(fileCategories);
+                    }
                 }
             })
         })
