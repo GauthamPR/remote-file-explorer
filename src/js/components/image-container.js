@@ -1,5 +1,6 @@
 import React from 'react';
 import LazyLoad from 'react-lazyload';
+import HidingButton from './hidingButton.js';
 
 const styleContainer = {
     display             : "grid",
@@ -34,7 +35,17 @@ class Images extends React.Component{
 }
 class ImageContainer extends React.Component{
     constructor(props){
-        super(props)
+        super(props);
+        this.state={
+            hidden: false
+        }
+        this.changeVisibility = this.changeVisibility.bind(this);
+    }
+
+    changeVisibility(){
+        this.setState(state=>({
+            hidden: !state.hidden
+        }))
     }
 
     render(){
@@ -46,9 +57,16 @@ class ImageContainer extends React.Component{
             })
         return(
             <section>
-                <h1>Images</h1>
+                <h1 className="section-header">
+                    <span>Images</span>
+                    <HidingButton
+                        containerHidden={this.state.hidden}
+                        btnName={"images-hide-btn"}
+                        changeContainerVisibility={this.changeVisibility}
+                    ></HidingButton>
+                </h1>
                 {this.props.images.length > 0?
-                    <div style={styleContainer}>
+                    <div style={this.state.hidden?{display: "none"}:styleContainer}>
                         {images}
                     </div>
                  :

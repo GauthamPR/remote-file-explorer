@@ -1,4 +1,5 @@
 import React from 'react';
+import HidingButton from './hidingButton.js';
 
 const styleTile = {
     backgroundColor : "#C4C78D",
@@ -25,9 +26,13 @@ const styleContainer = {
 class DirectoryContainer extends React.Component{
     constructor(props){
         super(props);
+        this.state={
+            hidden: false
+        }
         this.handleClick        = this.handleClick.bind(this);
         this.handleMouseEnter   = this.handleMouseEnter.bind(this);
         this.handleMouseOut     = this.handleMouseOut.bind(this);
+        this.changeVisibility   = this.changeVisibility.bind(this);
     }
 
     handleMouseEnter(event){
@@ -44,6 +49,11 @@ class DirectoryContainer extends React.Component{
         this.props.openDirectory(event.target.value);
     }
 
+    changeVisibility(){
+        this.setState(state=>({
+            hidden: !state.hidden
+        }))
+    }
     render(){
         let directories = []
         if(this.props.directories)
@@ -63,12 +73,22 @@ class DirectoryContainer extends React.Component{
             })
         return(
             <section>
-                <h1>Files</h1>
+                <h1 className="section-header">
+                    <span>Files</span>
+                    <HidingButton
+                        containerHidden={this.state.hidden}
+                        btnName={"directory-hide-btn"}
+                        changeContainerVisibility={this.changeVisibility}
+                    ></HidingButton>
+                </h1>
                 {this.props.directories.length > 0?
-                    <div style={styleContainer}>
-                        {directories}
-                    </div>
-                 :
+                    this.state.hidden?
+                        <div></div>
+                        :
+                        <div style={styleContainer}>
+                            {directories}
+                        </div>
+                    :
                     <div className="empty-placeholder">No Files</div>
                 }
             </section>
