@@ -24,7 +24,8 @@ function pathReducer(state=defaultState, action){
                                 });
         case SET_ADDRESS :   return Object.assign({}, state, {
                                     tree            : action.address.split('/').slice(0, action.address.split('/').length-1),
-                                    currentDirectory: action.address.split('/')[action.address.split('/').length-1]
+                                    currentDirectory: action.address.split('/')[action.address.split('/').length-1],
+                                    loading         : true
                                 })
         case GO_BACK        :   return Object.assign({}, state, {
                                     tree            : state.tree.slice(0, state.tree.length-1),

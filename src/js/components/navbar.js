@@ -1,5 +1,4 @@
 import React from 'react';
-
 const styleNav = {
     backgroundColor : "#233a6e",
     height          : 40,
@@ -90,13 +89,14 @@ class Navbar extends React.Component{
         return(
             <nav style={styleNav}>
                 <button
+                    id="back-btn"
                     type="button"
                     onClick={this.props.goBack}
                     onMouseEnter={this.handleMouseEnter}
                     onMouseOut={this.handleMouseOut}
                     style={styleBackButton}
                 >
-                    Go Back
+                    <i className="fas fa-arrow-left fa-2x" aria-hidden="true"></i>
                 </button>
                 <AddressBar setAddress={this.props.setAddress} tree={this.props.tree} currentDirectory={this.props.currentDirectory}/>
                 <div style={{backgroundColor:"yellow", width: 50, height: "100%"}}></div>
