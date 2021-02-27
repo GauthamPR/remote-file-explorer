@@ -75,9 +75,11 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
     return{
         openDirectory: function(directory){
+            sessionStorage.setItem('path', sessionStorage.getItem('path')+'/'+directory);
             dispatch(openDirectory(directory))
         },
         setAddress: function(address){
+            sessionStorage.setItem('path', address);
             dispatch(setAddress(address))
         },
         goBack: function(){

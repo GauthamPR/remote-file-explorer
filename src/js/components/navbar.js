@@ -46,7 +46,7 @@ class AddressBar extends React.Component{
     }
     render(){
         const arrow = ">"
-        const historyElements = this.props.tree.map((elem, index, array)=>{
+        const historyElements = this.props.tree.map((elem, index, arr)=>{
             return (
                 <React.Fragment key={index}>
                     <span 
@@ -57,7 +57,7 @@ class AddressBar extends React.Component{
                         }}
                         onMouseEnter={this.handleMouseEnter}
                         onMouseOut={this.handleMouseOut}
-                        onClick={this.handleClick.bind(this, array.slice(0, index+1).join('/'))}
+                        onClick={this.handleClick.bind(this, arr.slice(0, index+1).join('/'))}
                     >
                         {elem}
                     </span>
@@ -86,7 +86,6 @@ class Navbar extends React.Component{
     handleMouseOut(event){
         event.target.style.backgroundColor = styleBackButton.backgroundColor;
     }
-
     render(){
         return(
             <nav style={styleNav}>

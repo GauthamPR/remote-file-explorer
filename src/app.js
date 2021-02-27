@@ -22,7 +22,17 @@ class App extends React.Component{
         })
     }
     componentDidMount(){
-        this.getDirectoryContents();
+        let sessionPath = sessionStorage.getItem('path');
+        try{            
+            if(sessionPath==null)
+                sessionStorage.setItem('path', this.props.currentDirectory);
+            if([...this.props.tree, this.props.currentDirectory].join!=sessionPath)
+                throw "LOC_ERROR";
+            this.getDirectoryContents();
+        }catch(err){
+            if(err=="LOC_ERROR")
+                this.props.setAddress(sessionPath);
+        }
     }
     componentDidUpdate(prevProps){
         if(prevProps.currentDirectory != this.props.currentDirectory || prevProps.tree != this.props.tree)
