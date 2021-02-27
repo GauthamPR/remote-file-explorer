@@ -76,6 +76,7 @@ function mapDispatchToProps(dispatch){
     return{
         openDirectory: function(directory){
             sessionStorage.setItem('path', sessionStorage.getItem('path')+'/'+directory);
+            console.log("here")
             dispatch(openDirectory(directory))
         },
         setAddress: function(address){

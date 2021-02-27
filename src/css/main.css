@@ -20,3 +20,10 @@ h1{
     display: grid;
     place-items: center;
 }
+#back-btn i{
+    color:white;
+    pointer-events: none;
+}
+#back-btn:hover i{
+    color: black;
+}
