@@ -29,6 +29,10 @@ module.exports = ()=>{
                 },{
                     test: /\.png$/,
                     type: 'asset/resource'
+                },
+                {
+                    test: /manifest.json/,
+                    type: 'asset/resource'
                 }
             ]
         },

@@ -7,7 +7,17 @@ function Loading(){
         <h1>Loading....</h1>
     )
 }
+class ErrorScreen extends React.Component{
+    constructor(props){
+        super(props);
+    }
 
+    render(){
+        return (
+            <h1>{this.props.err}</h1>
+        )
+    }
+}
 class App extends React.Component{
     constructor(props){
         super(props)
@@ -18,7 +28,10 @@ class App extends React.Component{
         fetch('/getDirectory/' + [...this.props.tree, this.props.currentDirectory].join('/'))
         .then(response=>response.json())
         .then(data=>{
-            this.props.loadContent(data)
+            if(data.error)
+                this.props.setError(data.error);
+            else
+                this.props.loadContent(data)
         })
     }
     componentDidMount(){
@@ -49,11 +62,15 @@ class App extends React.Component{
                 />
                 {this.props.loading ?
                     <Loading />:
-                    <Main 
-                        path={[...this.props.tree, this.props.currentDirectory].join('/')}
-                        content={this.props.content}
-                        openDirectory={this.props.openDirectory}
-                    />
+                    !this.props.err?
+                        <Main 
+                            path={[...this.props.tree, this.props.currentDirectory].join('/')}
+                            content={this.props.content}
+                            openDirectory={this.props.openDirectory}
+                        />:
+                        <ErrorScreen 
+                            err={this.props.err}
+                        />
                 }   
             </div>
         );

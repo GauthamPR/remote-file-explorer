@@ -5,7 +5,7 @@ const styleTile = {
     backgroundColor : "#C4C78D",
     textAlign       : "center",
     padding         : "17px 5px",
-    minWidth           : 175,
+    minWidth        : 175,
     border          : "1px solid black",
     boxShadow       : "5px 5px 7px #1f1e1e",
     borderRadius    : 5,

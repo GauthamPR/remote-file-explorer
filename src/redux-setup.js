@@ -7,12 +7,14 @@ const OPEN_DIRECTORY    = "OPEN_DIRECTORY";
 const GO_BACK           = "GO_BACK";
 const LOAD_CONTENT      = "LOAD_CONTENT";
 const SET_ADDRESS       = "SET_ADDRESS";
+const ERROR             = "ERROR";
 
 const defaultState = {
     currentDirectory: process.env.ROOT_DIRECTORY.split('\\').pop(),
     tree            : [],
     content         : {},
-    loading         : true
+    loading         : true,
+    err             : false
 }
 
 function pathReducer(state=defaultState, action){
@@ -32,7 +34,8 @@ function pathReducer(state=defaultState, action){
                                     currentDirectory: state.tree.length>0?state.tree[state.tree.length-1]:state.currentDirectory,
                                     loading         : true
                                 });
-        case LOAD_CONTENT   :   return Object.assign({}, state, {content: action.content, loading: false})
+        case LOAD_CONTENT   :   return Object.assign({}, state, {content: action.content, loading: false, err: false})
+        case ERROR          :   return Object.assign({}, state, {err: action.err, loading: false})
         default             :   return state
     }
 }
@@ -64,12 +67,19 @@ function loadContent(content){
     }
 }
 
+function setError(err){
+    return{
+        type: ERROR,
+        err
+    }
+}
 function mapStateToProps(state){
     return {
         currentDirectory    : state.currentDirectory,
         tree                : state.tree,
         content             : state.content,
-        loading             : state.loading
+        loading             : state.loading,
+        err                 : state.err
     }
 }
 
@@ -77,17 +87,20 @@ function mapDispatchToProps(dispatch){
     return{
         openDirectory: function(directory){
             sessionStorage.setItem('path', sessionStorage.getItem('path')+'/'+directory);
-            dispatch(openDirectory(directory))
+            dispatch(openDirectory(directory));
         },
         setAddress: function(address){
             sessionStorage.setItem('path', address);
-            dispatch(setAddress(address))
+            dispatch(setAddress(address));
         },
         goBack: function(){
-            dispatch(goBack())
+            dispatch(goBack());
         },
         loadContent: function(content){
-            dispatch(loadContent(content))
+            dispatch(loadContent(content));
+        },
+        setError: function(err){
+            dispatch(setError(err));
         }
     }
 }
