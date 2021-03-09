@@ -18,6 +18,7 @@ class HidingButton extends React.Component{
         return(
             <button
                 type="button"
+                aria-label="drop-down"
                 style={{
                     backgroundColor : "transparent",
                     border          : "none",

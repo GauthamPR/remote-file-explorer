@@ -91,6 +91,7 @@ class Navbar extends React.Component{
                 <button
                     id="back-btn"
                     type="button"
+                    aria-label="back"
                     onClick={this.props.goBack}
                     onMouseEnter={this.handleMouseEnter}
                     onMouseOut={this.handleMouseOut}

@@ -14,7 +14,7 @@ module.exports = ()=>{
     }, {});
 
     return{
-        mode    : 'development',
+        mode    : process.env.NODE_ENV,
         devtool : 'inline-source-map',
         module: {
             rules: [
@@ -44,16 +44,8 @@ module.exports = ()=>{
             new CopyWebpackPlugin({
                 patterns:[
                     {
-                        from: './src/manifest.json',
-                        to: './manifest.json'
-                    },
-                    {
-                        from: './src/images',
-                        to: './images'
-                    },
-                    {
-                        from: './src/serviceWorker.js',
-                        to:  './serviceWorker.js'
+                        from: './src/public',
+                        to: './'
                     }
                 ]
             })
