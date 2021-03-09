@@ -1,5 +1,6 @@
 const HTMLWebPackPlugin         = require('html-webpack-plugin');
 const { CleanWebpackPlugin }    = require('clean-webpack-plugin');
+const CopyWebpackPlugin         = require('copy-webpack-plugin');
 const path                      = require('path')
 const dotenv                    = require('dotenv')
 const webpack                   = require('webpack')
@@ -29,20 +30,32 @@ module.exports = ()=>{
                 },{
                     test: /\.png$/,
                     type: 'asset/resource'
-                },
-                {
-                    test: /manifest.json/,
-                    type: 'asset/resource'
                 }
             ]
         },
         plugins: [
             new webpack.DefinePlugin(envKeys),
-            new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+            new CleanWebpackPlugin({ cleanStaleWebpackAssets: true }),
             new HTMLWebPackPlugin({
                 template    : './src/index.html',
                 filename    : '../views/index.html',
                 publicPath  : '/'
+            }),
+            new CopyWebpackPlugin({
+                patterns:[
+                    {
+                        from: './src/manifest.json',
+                        to: './manifest.json'
+                    },
+                    {
+                        from: './src/images',
+                        to: './images'
+                    },
+                    {
+                        from: './src/serviceWorker.js',
+                        to:  './serviceWorker.js'
+                    }
+                ]
             })
         ],
         output: {

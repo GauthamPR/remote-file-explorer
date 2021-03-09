@@ -22,6 +22,14 @@ class App extends React.Component{
     constructor(props){
         super(props)
         this.getDirectoryContents = this.getDirectoryContents.bind(this);
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function() {
+              navigator.serviceWorker
+                .register("/serviceWorker.js")
+                .then(res => console.log("service worker registered"))
+                .catch(err => console.log("service worker not registered", err))
+            })
+        }          
     }
 
     getDirectoryContents(){
@@ -53,7 +61,7 @@ class App extends React.Component{
     }
     render(){
         return(
-            <div id="root" style={{fontFamily: "inherit"}}>
+            <div id="react-root" style={{fontFamily: "inherit"}}>
                 <Navbar 
                     tree={this.props.tree}
                     currentDirectory={this.props.currentDirectory}
