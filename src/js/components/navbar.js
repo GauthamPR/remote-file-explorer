@@ -1,4 +1,5 @@
 import React from 'react';
+import addressServices from '../addressServices';
 const styleNav = {
     backgroundColor : "#233a6e",
     height          : 40,
@@ -33,7 +34,7 @@ class AddressBar extends React.Component{
         this.handleMouseOut     = this.handleMouseOut.bind(this);
     }
     handleClick(address){
-        this.props.setAddress(address)
+        this.props.setAddress(address);
     }
     handleMouseEnter(event){
         event.target.style.opacity      = "1";
@@ -42,6 +43,12 @@ class AddressBar extends React.Component{
     handleMouseOut(event){
         event.target.style.opacity      = "0.6";
         event.target.style.borderBottom = "none";
+    }
+    componentDidUpdate(prevProps){
+        if(prevProps.tree!=this.props.tree || prevProps.currentDirectory!=this.props.currentDirectory){
+            addressServices.pushHistory(this.props);
+            addressServices.saveLocationInSession(this.props);
+        }
     }
     render(){
         const arrow = ">"

@@ -2,7 +2,6 @@ import React from 'react';
 import {createStore} from 'redux';
 import {connect, Provider} from 'react-redux';
 import Presentational from './app.js'
-import addressServices from './js/addressServices.js';
 
 const OPEN_DIRECTORY    = "OPEN_DIRECTORY";
 const GO_BACK           = "GO_BACK";
@@ -11,7 +10,7 @@ const SET_ADDRESS       = "SET_ADDRESS";
 const ERROR             = "ERROR";
 
 const defaultState = {
-    currentDirectory: process.env.ROOT_DIRECTORY.split('\\').pop(),
+    currentDirectory: undefined,
     tree            : [],
     content         : {},
     loading         : true,
@@ -87,11 +86,9 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
     return{
         openDirectory: function(directory){
-            sessionStorage.setItem('path', sessionStorage.getItem('path')+'/'+directory);
             dispatch(openDirectory(directory));
         },
         setAddress: function(address){
-            sessionStorage.setItem('path', address);
             dispatch(setAddress(address));
         },
         goBack: function(){
@@ -107,7 +104,6 @@ function mapDispatchToProps(dispatch){
 }
 
 const store = createStore(pathReducer,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
-store.subscribe(()=>addressServices.saveLocationInSession(store.getState()));
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Presentational);
 

@@ -1,6 +1,11 @@
 module.exports={
-    saveLocationInSession: function(){
-        sessionStorage.setItem('path', address);
+    saveLocationInSession: function(state){
+        sessionStorage.setItem('path', [...state.tree, state.currentDirectory].join('/'));
+    },
+    pushHistory: function(state){
+        let newAddress = [window.location.hostname, ...state.tree, state.currentDirectory].join('/');
+        if(newAddress != window.location)
+            window.history.pushState(null, '', '//' + newAddress);
     },
     restorePreviousLocation: function(props, getDirectoryContents){
         let sessionPath = sessionStorage.getItem('path');

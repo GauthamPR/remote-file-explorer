@@ -18,10 +18,19 @@ upload(app);
     next();
 })*/
 
-app.get('/', (req, res)=> {
-    res.sendFile(__dirname + '/build/views/index.html');
+app.get('/info/:name', (req, res)=>{
+    try{
+        if(req.params.name == 'rootFolder'){
+            let rootFolder = process.env.ROOT_DIRECTORY.split('\\').pop();
+            res.json({rootFolder: rootFolder})
+        }else{
+            throw 'INVALID PARAM NAME';
+        }
+    }
+    catch(err){
+        res.status(404).json({error: err.message});
+    }
 })
-
 app.get('/getDirectory/*', (req, res)=> {
     diskService
     .readFiles(diskService.renderFilePath(decodeURIComponent(req.url)))
@@ -35,6 +44,10 @@ app.get('/getDirectory/*', (req, res)=> {
 
 app.get('/getImages/*',async (req, res)=> {
     res.sendFile(await diskService.renderFilePath(decodeURIComponent(req.url)));
+})
+
+app.get('/*', (req, res)=> {
+    res.sendFile(__dirname + '/build/views/index.html');
 })
 /*
 

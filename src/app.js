@@ -27,9 +27,13 @@ class App extends React.Component{
             window.addEventListener("load", function() {
               navigator.serviceWorker
                 .register("/serviceWorker.js")
-                .catch(err => console.log("service worker not registered", err))
+                .catch(err => console.log("Unable to register Service Worker", err))
             })
-        }          
+        }
+        window.onpopstate = function(event){
+            let newAddress = window.location.pathname;
+            props.setAddress(newAddress.slice(1, newAddress.length));
+        }
     }
 
     getDirectoryContents(){
@@ -39,10 +43,19 @@ class App extends React.Component{
             if(data.error)
                 this.props.setError(data.error);
             else
-                this.props.loadContent(data)
+                this.props.loadContent(data);
         })
     }
     componentDidMount(){
+        if(this.props.currentDirectory==undefined){
+            console.log("triggered")
+            fetch('/info/rootFolder')
+            .then(response=>response.json())
+            .then(data=>{
+                console.log(data);
+                this.props.setAddress(data.rootFolder)})
+            .catch(err=>console.error(err))
+        }
         addressServices.restorePreviousLocation(this.props, this.getDirectoryContents);
     }
     componentDidUpdate(prevProps){
