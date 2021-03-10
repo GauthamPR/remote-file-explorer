@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './js/components/navbar.js';
 import Main from './js/components/main.js';
+import addressServices from './js/addressServices.js';
 
 function Loading(){
     return (
@@ -42,17 +43,7 @@ class App extends React.Component{
         })
     }
     componentDidMount(){
-        let sessionPath = sessionStorage.getItem('path');
-        try{            
-            if(sessionPath==null)
-                sessionStorage.setItem('path', this.props.currentDirectory);
-            else if([...this.props.tree, this.props.currentDirectory].join!=sessionPath)
-                throw "LOC_ERROR";
-            this.getDirectoryContents();
-        }catch(err){
-            if(err=="LOC_ERROR")
-                this.props.setAddress(sessionPath);
-        }
+        addressServices.restorePreviousLocation(this.props, this.getDirectoryContents);
     }
     componentDidUpdate(prevProps){
         if(prevProps.currentDirectory != this.props.currentDirectory || prevProps.tree != this.props.tree)

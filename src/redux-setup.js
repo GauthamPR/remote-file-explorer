@@ -2,6 +2,7 @@ import React from 'react';
 import {createStore} from 'redux';
 import {connect, Provider} from 'react-redux';
 import Presentational from './app.js'
+import addressServices from './js/addressServices.js';
 
 const OPEN_DIRECTORY    = "OPEN_DIRECTORY";
 const GO_BACK           = "GO_BACK";
@@ -106,6 +107,8 @@ function mapDispatchToProps(dispatch){
 }
 
 const store = createStore(pathReducer,  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+store.subscribe(()=>addressServices.saveLocationInSession(store.getState()));
+
 const Container = connect(mapStateToProps, mapDispatchToProps)(Presentational);
 
 class AppWrapper extends React.Component{
