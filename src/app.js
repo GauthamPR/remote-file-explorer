@@ -30,9 +30,19 @@ class App extends React.Component{
                 .catch(err => console.log("Unable to register Service Worker", err))
             })
         }
+        if(this.props.currentDirectory==undefined){
+            console.log("triggered")
+            fetch('/info/rootFolder')
+            .then(response=>response.json())
+            .then(data=>{
+                console.log(data);
+                window.history.replaceState(null, '', '//' + window.location.hostname + '/' + data.rootFolder);
+                this.props.setAddress(data.rootFolder, false)})
+            .catch(err=>console.error(err))
+        }
         window.onpopstate = function(event){
             let newAddress = window.location.pathname;
-            props.setAddress(newAddress.slice(1, newAddress.length));
+            props.setAddress(newAddress.slice(1, newAddress.length), false);
         }
     }
 
@@ -47,15 +57,6 @@ class App extends React.Component{
         })
     }
     componentDidMount(){
-        if(this.props.currentDirectory==undefined){
-            console.log("triggered")
-            fetch('/info/rootFolder')
-            .then(response=>response.json())
-            .then(data=>{
-                console.log(data);
-                this.props.setAddress(data.rootFolder)})
-            .catch(err=>console.error(err))
-        }
         addressServices.restorePreviousLocation(this.props, this.getDirectoryContents);
     }
     componentDidUpdate(prevProps){
@@ -67,6 +68,7 @@ class App extends React.Component{
             <div id="react-root" style={{fontFamily: "inherit"}}>
                 <Navbar 
                     tree={this.props.tree}
+                    pushHistory={this.props.pushHistory}
                     currentDirectory={this.props.currentDirectory}
                     goBack={this.props.goBack}
                     setAddress={this.props.setAddress}

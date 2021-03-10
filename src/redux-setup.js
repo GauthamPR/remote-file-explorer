@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStore} from 'redux';
 import {connect, Provider} from 'react-redux';
-import Presentational from './app.js'
+import Presentational from './app.js';
 
 const OPEN_DIRECTORY    = "OPEN_DIRECTORY";
 const GO_BACK           = "GO_BACK";
@@ -14,7 +14,8 @@ const defaultState = {
     tree            : [],
     content         : {},
     loading         : true,
-    err             : false
+    err             : false,
+    pushHistory     : true
 }
 
 function pathReducer(state=defaultState, action){
@@ -22,20 +23,23 @@ function pathReducer(state=defaultState, action){
         case OPEN_DIRECTORY :   return Object.assign({}, state, {
                                     tree            : [...state.tree, state.currentDirectory],
                                     currentDirectory: action.currentDirectory,
-                                    loading         : true
+                                    loading         : true,
+                                    pushHistory     : true
                                 });
         case SET_ADDRESS :   return Object.assign({}, state, {
                                     tree            : action.address.split('/').slice(0, action.address.split('/').length-1),
                                     currentDirectory: action.address.split('/')[action.address.split('/').length-1],
-                                    loading         : true
+                                    loading         : true,
+                                    pushHistory     : action.pushHistory
                                 })
         case GO_BACK        :   return Object.assign({}, state, {
                                     tree            : state.tree.slice(0, state.tree.length-1),
                                     currentDirectory: state.tree.length>0?state.tree[state.tree.length-1]:state.currentDirectory,
-                                    loading         : true
+                                    loading         : true,
+                                    pushHistory     : false
                                 });
-        case LOAD_CONTENT   :   return Object.assign({}, state, {content: action.content, loading: false, err: false})
-        case ERROR          :   return Object.assign({}, state, {err: action.err, loading: false})
+        case LOAD_CONTENT   :   return Object.assign({}, state, {content: action.content, loading: false, err: false, pushHistory: true})
+        case ERROR          :   return Object.assign({}, state, {err: action.err, loading: false, pushHistory: true})
         default             :   return state
     }
 }
@@ -47,10 +51,11 @@ function openDirectory(directory){
     }
 }
 
-function setAddress(address){
+function setAddress(address, pushHistory=true){
     return {
-        type    : SET_ADDRESS,
-        address : address
+        type        : SET_ADDRESS,
+        address     : address,
+        pushHistory : pushHistory
     }
 }
 
@@ -79,7 +84,8 @@ function mapStateToProps(state){
         tree                : state.tree,
         content             : state.content,
         loading             : state.loading,
-        err                 : state.err
+        err                 : state.err,
+        pushHistory         : state.pushHistory
     }
 }
 
@@ -88,8 +94,8 @@ function mapDispatchToProps(dispatch){
         openDirectory: function(directory){
             dispatch(openDirectory(directory));
         },
-        setAddress: function(address){
-            dispatch(setAddress(address));
+        setAddress: function(address, pushHistory){
+            dispatch(setAddress(address, pushHistory));
         },
         goBack: function(){
             dispatch(goBack());

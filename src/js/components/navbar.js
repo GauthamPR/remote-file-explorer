@@ -1,5 +1,6 @@
 import React from 'react';
 import addressServices from '../addressServices';
+
 const styleNav = {
     backgroundColor : "#233a6e",
     height          : 40,
@@ -45,12 +46,15 @@ class AddressBar extends React.Component{
         event.target.style.borderBottom = "none";
     }
     componentDidUpdate(prevProps){
+        console.log("Componenet Updated");
+        console.log({propsvalues: this.props.pushHistory});
         if(prevProps.tree!=this.props.tree || prevProps.currentDirectory!=this.props.currentDirectory){
             addressServices.pushHistory(this.props);
             addressServices.saveLocationInSession(this.props);
         }
     }
     render(){
+        console.log("Navbar Rendered")
         const arrow = ">"
         const historyElements = this.props.tree.map((elem, index, arr)=>{
             return (
@@ -106,7 +110,7 @@ class Navbar extends React.Component{
                 >
                     <i className="fas fa-arrow-left fa-2x" aria-hidden="true"></i>
                 </button>
-                <AddressBar setAddress={this.props.setAddress} tree={this.props.tree} currentDirectory={this.props.currentDirectory}/>
+                <AddressBar pushHistory={this.props.pushHistory} setAddress={this.props.setAddress} tree={this.props.tree} currentDirectory={this.props.currentDirectory}/>
                 <div style={{backgroundColor:"yellow", width: 50, height: "100%"}}></div>
             </nav>
         )
